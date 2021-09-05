@@ -210,7 +210,7 @@
     "electron-ipc-mock": "0.0.3",
     "electron-json-storage": "4.5.0",
     "electron-rebuild": "2.3.5",
-    "electron-updater": "4.3.8",
+    "electron-updater": "4.3.9",
     "enzyme": "3.10.0",
     "es7-object-polyfill": "0.0.7",
     "eslint": "7.21.0",
