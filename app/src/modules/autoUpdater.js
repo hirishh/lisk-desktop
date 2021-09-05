@@ -17,11 +17,6 @@ export default ({ // eslint-disable-line max-statements
   };
   autoUpdater.autoDownload = false;
 
-  autoUpdater.checkForUpdatesAndNotify();
-  setInterval(() => {
-    autoUpdater.checkForUpdatesAndNotify();
-  }, 24 * 60 * 60 * 1000);
-
   autoUpdater.on('error', (error) => {
     // eslint-disable-next-line no-console
     console.error('There was a problem updating the application');
@@ -90,6 +85,8 @@ export default ({ // eslint-disable-line max-statements
       }
     });
   });
+
+  autoUpdater.checkForUpdatesAndNotify();
 
   // export this to MenuItem click callback
   function checkForUpdates(menuItem) {
