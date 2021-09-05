@@ -88,6 +88,8 @@ export default ({ // eslint-disable-line max-statements
     });
   });
 
+  autoUpdater.checkForUpdatesAndNotify();
+
   // export this to MenuItem click callback
   function checkForUpdates(menuItem) {
     autoUpdater.checkForUpdates();
