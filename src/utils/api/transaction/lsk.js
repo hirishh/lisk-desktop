@@ -301,6 +301,7 @@ export const getTransactionFee = async ({
  * @param {Object} transaction.network Network config from the redux store
  * @param {Object} transaction.keys keys of the multisig account
  * @param {Object} transaction.transactionObject Details of the transaction, including passphrase
+ * @param {boolean} transaction.isHwSigning true if an hardware wallet will sign the transaction
  * @returns {Promise} promise that resolves to a transaction or
  * rejects with an error
  */
@@ -309,6 +310,7 @@ export const create = ({
   account,
   passphrase,
   transactionObject,
+  isHwSigning,
 // eslint-disable-next-line max-statements
 }) => new Promise((resolve, reject) => {
   const {
@@ -324,6 +326,19 @@ export const create = ({
   const transaction = createTransactionObject(rawTransaction, moduleAssetId);
 
   const schema = moduleAssetSchemas[moduleAssetId];
+
+  if (isHwSigning) {
+    // In case of hardware wallet, you just need to return
+    // the signing bytes that are going to be sent to HW device
+    const signingBytes = transactions.getSigningBytes(schema, transaction);
+    const ret = {
+      networkIdentifier,
+      transactionObject: transaction,
+      transactionBytes: signingBytes,
+    };
+    resolve(ret);
+    return;
+  }
 
   try {
     let signedTransaction;

@@ -50,6 +50,7 @@ const Summary = ({
   }, [secondPass]);
 
   const submitTransaction = (fn) => {
+    console.info("Send submitTransaction transactions", transactions);
     if (!account.summary.isMultisignature || secondPass) {
       Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
       if (account.loginType !== loginTypes.passphrase.code

@@ -26,12 +26,14 @@ class SelectAccount extends React.Component {
   }
 
   componentDidMount() {
+    console.info('selectAccount componentDidMount');
     this.getAccountsFromDevice();
   }
 
   componentDidUpdate() {
     // istanbul ignore else
-    if (this.props.account?.summary.address) {
+    console.info('selectAccount componentDidUpdate this.props.account', this.props.account);
+    if (this.props.account?.summary?.address) {
       this.props.history.push(`${routes.dashboard.path}`);
     }
     const { devices, device } = this.props;
@@ -44,7 +46,7 @@ class SelectAccount extends React.Component {
     // istanbul ignore else
     if (Array.isArray(settings.hardwareAccounts[device.model])) {
       const storedAccount = settings.hardwareAccounts[device.model].filter(account =>
-        account.summary.address === address);
+        account.summary?.address === address);
       return storedAccount.length ? storedAccount[0].name : null;
     }
 
@@ -53,15 +55,19 @@ class SelectAccount extends React.Component {
 
   async getAccountsFromDevice() {
     const { device, network } = this.props;
+    console.info('selectAccount getAccountsFromDevice', { device, network });
     const [error, accounts] = await to(getAccountsFromDevice({ device, network }));
+    console.info('selectAccount getAccountsFromDevice', error, accounts);
     if (error) {
       toast.error(`Error retrieving accounts from device: ${error}`);
     } else {
+      console.info("selectAccount getAccountsFromDevice accounts", accounts);
       const hwAccounts = accounts.map((account, index) => ({
         ...account,
         name: this.getNameFromAccount(account.summary.address),
         shouldShow: account.summary.balance > 0 || index === 0,
       }));
+      console.info("selectAccount getAccountsFromDevice hwAccounts", hwAccounts);
       this.setState({ hwAccounts });
     }
   }
@@ -108,6 +114,8 @@ class SelectAccount extends React.Component {
 
   onSelectAccount(account, index) {
     const { login, device, settingsUpdated } = this.props;
+    console.info("selectAccount onSelectAccount account, index", account, index);
+    console.info("selectAccount onSelectAccount", login, device, settingsUpdated);
 
     settingsUpdated({
       token: {
@@ -129,6 +137,7 @@ class SelectAccount extends React.Component {
   render() {
     const { t, device, goBack } = this.props;
     const { accountOnEditMode, hwAccounts } = this.state;
+    console.info("selectAccount hwAccounts", hwAccounts);
 
     return (
       <div>

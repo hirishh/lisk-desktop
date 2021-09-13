@@ -13,7 +13,7 @@ import Piwik from '@utils/piwik';
 import { PrimaryButton } from '@toolbox/buttons';
 import PassphraseInput from '@toolbox/passphraseInput';
 import DiscreetModeToggle from '@shared/discreetModeToggle';
-// import Icon from '@toolbox/icon/index';
+import Icon from '@toolbox/icon';
 import NetworkSelector from './networkSelector';
 import styles from './login.css';
 
@@ -107,6 +107,7 @@ class Login extends React.Component {
   render() {
     const { t, settings } = this.props;
     // const canHWSignIn = !network.networks?.LSK;
+    const canHWSignIn = true;
 
     return (
       <>
@@ -156,7 +157,7 @@ class Login extends React.Component {
                 >
                   {t('Sign in')}
                 </PrimaryButton>
-                {/* {
+                {
                   canHWSignIn
                     ? (
                       <Link
@@ -167,8 +168,7 @@ class Login extends React.Component {
                         {t('Sign in with a hardware wallet')}
                       </Link>
                     ) : null
-                } */}
-
+                }
               </div>
             </form>
           </div>

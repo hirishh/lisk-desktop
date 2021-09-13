@@ -16,6 +16,7 @@ class SelectDevice extends React.Component {
   componentDidMount() {
     const { devices } = this.props;
     this.goBackIfNoDevices();
+    console.info("selectDevice componentDidMount devices", devices)
     if (devices.length === 1) this.onSelectDevice(devices[0].deviceId);
   }
 

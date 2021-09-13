@@ -1,4 +1,4 @@
-import { getAccountsFromDevice, signSendTransaction, signVoteTransaction } from './hwManager';
+import { getAccountsFromDevice } from './hwManager';
 import * as accountApi from './api/account';
 import accounts from '../../test/constants/accounts';
 import * as communication from '../../libs/hwManager/communication';
@@ -38,6 +38,7 @@ describe('hwManager util', () => {
     });
   });
 
+  /*
   describe('signSendTransaction', () => {
     it.skip('should return a transaction object with the proper signature', async () => {
       const account = {
@@ -96,8 +97,10 @@ describe('hwManager util', () => {
         expect(tx).toHaveProperty('asset');
         expect(tx).toHaveProperty('fee', '100000000');
         expect(tx).toHaveProperty('recipientId', '7955155501030618852L');
-        expect(tx).toHaveProperty('senderPublicKey', '9c854ea85fbcb32e2c5d2c7a820a354a6627213ebb74b42b1ee851d4e4fa035e');
+        expect(tx).toHaveProperty('senderPublicKey',
+          '9c854ea85fbcb32e2c5d2c7a820a354a6627213ebb74b42b1ee851d4e4fa035e');
       });
     });
   });
+  */
 });

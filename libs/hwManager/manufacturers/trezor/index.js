@@ -7,7 +7,6 @@ import {
 import { TREZOR } from './constants';
 import {
   getHardenedPath,
-  toTrezorGrammar,
 } from './utils';
 
 /**
@@ -121,7 +120,8 @@ const signTransaction = (transporter, { device, data }) => {
           'LiskSignedTx',
           {
             address_n: getHardenedPath(data.index),
-            transaction: toTrezorGrammar(data.tx),
+            networkIdentifier: data.networkIdentifier,
+            transaction: data.transactionBytes,
           },
         );
         return resolve(message.signature);

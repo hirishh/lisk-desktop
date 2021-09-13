@@ -68,7 +68,7 @@ class TransactionSummary extends React.Component {
     const {
       title, children, confirmButton, cancelButton, keys,
       account, createTransaction, t, fee, confirmation, setSecondPass,
-      classNames, token, footerClassName, showCancelButton = true,
+      classNames, token, footerClassName, showCancelButton = true
     } = this.props;
     const {
       isHardwareWalletConnected, isConfirmed,
@@ -117,23 +117,21 @@ class TransactionSummary extends React.Component {
               : null
           }
         </BoxContent>
-        {!isHardwareWalletConnected && (
-          <Footer
-            confirmButton={confirmButton}
-            cancelButton={cancelButton}
-            footerClassName={footerClassName}
-            showCancelButton={showCancelButton}
-            confirmation={confirmation}
-            isConfirmed={isConfirmed}
-            createTransaction={createTransaction}
-            isMultisignature={token === tokenMap.LSK.key && account.summary.isMultisignature}
-            hasSecondPass={
-              keys && keys.mandatoryKeys.length === 2 && keys.optionalKeys.length === 0
-            }
-            t={t}
-            setSecondPass={setSecondPass}
-          />
-        )}
+        <Footer
+          confirmButton={confirmButton}
+          cancelButton={cancelButton}
+          footerClassName={footerClassName}
+          showCancelButton={showCancelButton}
+          confirmation={confirmation}
+          isConfirmed={isConfirmed}
+          createTransaction={createTransaction}
+          isMultisignature={token === tokenMap.LSK.key && account.summary.isMultisignature}
+          hasSecondPass={
+            keys && keys.mandatoryKeys.length === 2 && keys.optionalKeys.length === 0
+          }
+          t={t}
+          setSecondPass={setSecondPass}
+        />
       </Box>
     );
   }

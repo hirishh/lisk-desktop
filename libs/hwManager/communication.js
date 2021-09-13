@@ -12,8 +12,10 @@ const IPC = window.ipc;
  */
 const executeCommand = (action, payload) => (
   new Promise((resolve, reject) => {
+    console.info('COMM: executeCommand', action, payload);
     // Listening for response
     IPC.once(`${action}.${RESPONSE}`, (event, response) => {
+      console.info('COMM: executeCommand response', event, response);
       if (response.success) return resolve(response.data);
       return reject(new Error(`${action} failed: ${response.error}`));
     });
@@ -32,6 +34,7 @@ const executeCommand = (action, payload) => (
  * not information in screen
  */
 const getPublicKey = async (data) => {
+  console.info('COMM: getPublicKey', data);
   const response = await executeCommand(IPC_MESSAGES.HW_COMMAND, {
     action: IPC_MESSAGES.GET_PUBLIC_KEY, data,
   });
@@ -48,6 +51,7 @@ const getPublicKey = async (data) => {
  * not information in screen
  */
 const getAddress = async (data) => {
+  console.info('COMM: getAddress', data);
   const response = await executeCommand(IPC_MESSAGES.HW_COMMAND, {
     action: IPC_MESSAGES.GET_ADDRESS, data,
   });
@@ -60,9 +64,11 @@ const getAddress = async (data) => {
  * @param {object} data -> Object that contain the information about the device and data
  * @param {string} data.deviceId -> Id of the hw device
  * @param {number} data.index -> index of the account of which will extract information
- * @param {object} data.tx -> Object with all transaction information
+ * @param {number} data.networkIdentifier -> lisk network identifier
+ * @param {object} data.transactionBytes -> transaction bytes to be signed
  */
 const signTransaction = async (data) => {
+  console.info('COMM: signTransaction', data);
   const response = await executeCommand(
     IPC_MESSAGES.HW_COMMAND,
     {
@@ -82,6 +88,7 @@ const signTransaction = async (data) => {
  * @param {object} data.message -> Object with all transaction information
  */
 const signMessage = async (data) => {
+  console.info('COMM: signMessage', data);
   const response = await executeCommand(
     IPC_MESSAGES.HW_COMMAND,
     {
@@ -135,7 +142,7 @@ const subscribeToDevicesList = (fn) => {
     fn(response);
   };
   IPC.on(IPC_MESSAGES.DEVICE_LIST_CHANGED, updateDevices);
-  setImmediate(updateDevices);
+  setTimeout(updateDevices, 0);
   return {
     unsubscribe: IPC.removeListener.bind(IPC, IPC_MESSAGES.DEVICE_LIST_CHANGED, fn),
   };
